@@ -101,7 +101,7 @@ $(function() {
                 feedcontent2 = $('.feed').html();
                 expect(feedcontent1).not.toEqual(feedcontent2);
                 done(); 
-            })
+            });
         });
     });
 }());

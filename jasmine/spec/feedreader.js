@@ -81,20 +81,20 @@ $(function() {
             expect(entries.length).toBeGreaterThan(0);
             done();
         });
-
     });  
 
     /*This is "New Feed Selection" suite*/
     describe('New Feed Selection', function(){
-         /*ensures when a new feed is loaded
-         by the loadFeed function that the content actually changes  */
+        /*ensures when a new feed is loaded
+        by the loadFeed function that the content actually changes  */
         var feedcontent1;
         beforeEach(function(){
-            loadFeed(3, function(done) {
+            loadFeed(3, function() {
                  feedcontent1 = $('.feed').html();
+                 done();
             }); 
         });
-         var feedcontent2;
+        var feedcontent2;
         it('changes the feed html', function(done) {
             loadFeed(2, function(){
                 feedcontent2 = $('.feed').html();

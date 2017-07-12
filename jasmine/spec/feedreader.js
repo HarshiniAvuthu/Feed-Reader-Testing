@@ -52,56 +52,51 @@ $(function() {
     });
 
     /* This is a new suite named "The menu" */
-    describe('The menu icon', function() {
-        /* showing and hiding of menu when clicked  on menu*/
-        
-        it('hiding when icon is clicked again', function() {
-            $('.menu-icon-link').click();
-            expect($('.menu').is(':hidden')).toBe(false);
-        });   
+    describe('menu', function() {
+        it('hidden menu', function () {
+            expect($('.menu-hidden').is(':visible')).toBe(true);
+        });
 
-        it('showing when icon is clicked', function() {
-            $('.menu-icon-link').click();
-            expect($('.menu').is(':visible')).toBe(false);
-        });             
+        it('menu visible on click', function () {
+            $('a.menu-icon-link').click();
+            expect($('.menu-hidden').is(':visible')).toBe(false);
+        });
+
+        it('hidden by clicking again ', function () {
+            $('a.menu-icon-link').click();
+            expect($('.menu-hidden').is(':visible')).toBe(true);
+        });
     });
 
     /* This is a new suite named "Initial Entries" */
     describe('Initial Entries', function () {
         /* This is a test which ensures that there is at least
          a single .entry element within the .feed container. */
-         
-        beforeEach(function (done) {
-            window.jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
-            setTimeout(function () {
-                loadFeed(1);
-                done();
-            });
+        beforeEach(function(done) {
+            loadFeed(0, done);
         });
 
         it('has at least single entry in feed container', function(done) {
-            expect($('.feed').children()).toBeDefined();
-            expect($('.feed').children().length).not.toBe('0');
+            var entries = $('.feed').find('.entry');
+            expect(entries.length >= 1).toBe(true);
             done();
-        }); 
+        });
+
     });  
 
     /*This is "New Feed Selection" suite*/
-    describe('New Feed Selection', function(){
-         /*ensures when a new feed is loaded
-         by the loadFeed function that the content actually changes  */
-        var feedcontent1;
-        loadFeed(3, function() {
-            feedcontent1 = $('.feed').html();
+    describe('New Feed Selection', function() {
+        var entries;
+        beforeEach(function(done) {
+            loadFeed(1, (function() {
+                entries = $(".feed").html();
+            }));
             done();
-        }); 
-        var feedcontent2;
-        it('changes the feed html', function(done) {
-            loadFeed(2, function(){
-                feedcontent2 = $('.feed').html();
-                expect(feedcontent1).not.toEqual(feedcontent2);
-                done(); 
-            });
+        });
+        it('content changes when a new feed is loaded', function(done) {
+            loadFeed(2, done);
+            expect($(".feed").html()).not.toEqual(entries);
         });
     });
+
 }());

@@ -33,6 +33,8 @@ $(function() {
         it('allFeeds have got the urls', function(){
             allFeeds.forEach(function(feed){
                 expect(feed.urls).not.toBeNull();
+                expect(feed.url).toBeDefined(); 
+                expect(feed.url).not.toBe('');
             });
         });
 
@@ -44,6 +46,7 @@ $(function() {
          it('allFeeds have got the name', function(){
             allFeeds.forEach(function(feed){
                 expect(feed.name).toBeDefined();
+                expect(feed.name).not.toBe('');
             });
          });
     });
@@ -51,15 +54,16 @@ $(function() {
     /* This is a new suite named "The menu" */
     describe('The menu icon', function() {
         /* showing and hiding of menu when clicked  on menu*/
-        it('showing when icon is clicked', function() {
-            $('.menu-icon-link').trigger('click'); 
-            expect($('.menu').is(':visible')).toBe(false);
-        });
-
+        
         it('hiding when icon is clicked again', function() {
-            $('.menu-icon-link').trigger('click'); 
+            $('.menu-icon-link').click();
+            expect($('.menu').is(':hidden')).toBe(false);
+        });   
+
+        it('showing when icon is clicked', function() {
+            $('.menu-icon-link').click();
             expect($('.menu').is(':visible')).toBe(false);
-        });                
+        });             
     });
 
     /* This is a new suite named "Initial Entries" */
@@ -70,11 +74,13 @@ $(function() {
         beforeEach(function (done) {
             window.jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
             setTimeout(function () {
-                loadFeed(1, done());
-            }, 1000);
+                loadFeed(1);
+                done();
+            });
         });
 
         it('has at least single entry in feed container', function(done) {
+            expect($('.feed').children()).toBeDefined();
             expect($('.feed').children().length).not.toBe('0');
             done();
         }); 
@@ -84,20 +90,18 @@ $(function() {
     describe('New Feed Selection', function(){
          /*ensures when a new feed is loaded
          by the loadFeed function that the content actually changes  */
-        
         var feedcontent1;
-        var feedcontent2;
-        beforeEach(function(done){
-            loadFeed(3, done());
+        loadFeed(3, function() {
             feedcontent1 = $('.feed').html();
-        });
-
+            done();
+        }); 
+        var feedcontent2;
         it('changes the feed html', function(done) {
-            loadFeed(2);
-            feedcontent2 = $('.feed').html();
-            expect(feedcontent1).not.toEqual(feedcontent2);
-            done(); 
+            loadFeed(2, function(){
+                feedcontent2 = $('.feed').html();
+                expect(feedcontent1).not.toEqual(feedcontent2);
+                done(); 
+            })
         });
     });
-
 }());

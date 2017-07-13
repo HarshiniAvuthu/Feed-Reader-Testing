@@ -33,8 +33,7 @@ $(function() {
         it('allFeeds have got the urls', function(){
             allFeeds.forEach(function(feed){
                 expect(feed.urls).not.toBeNull();
-                expect(feed.url).toBeDefined(); 
-                expect(feed.url).not.toBe('');
+                expect(feed.url).toBeTruthy();
             });
         });
 
@@ -53,8 +52,8 @@ $(function() {
 
     /* This is a new suite named "The menu" */
     describe('menu', function() {
-        it('hidden menu', function () {
-            expect($('.menu-hidden').is(':visible')).toBe(true);
+        it('menu is hidden', function () {
+            expect($('body').hasClass('menu-hidden')).toBeDefined();
         });
 
         it('menu visible on click', function () {
@@ -76,10 +75,8 @@ $(function() {
             loadFeed(0, done);
         });
 
-        it('has at least single entry in feed container', function(done) {
-            var entries = $('.feed').find('.entry');
-            expect(entries.length).toBeGreaterThan(0);
-            done();
+        it('has at least single entry in feed container', function(done){
+            expect($('.feed .entry').length).not.toBeLessThan(0);
         });
     });  
 

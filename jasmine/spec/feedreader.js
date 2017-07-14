@@ -58,12 +58,12 @@ $(function() {
 
         it('menu visible on click', function () {
             $('a.menu-icon-link').click();
-            expect($('body').hasClass('.menu-hidden')).toBe(false);
+            expect($('body').hasClass('menu-hidden')).toBe(false);
         });
 
         it('hidden by clicking again ', function () {
             $('a.menu-icon-link').click();
-            expect($('body').hasClass('.menu-hidden')).toBe(false);
+            expect($('body').hasClass('menu-hidden')).toBe(true);
         });
     });
 
@@ -87,7 +87,8 @@ $(function() {
         var feedcontent1;
         beforeEach(function(done){
             loadFeed(3, function() {
-                feedcontent1 = $('.feed').html();    
+                feedcontent1 = $('.feed').html();  
+                done();  
             }); 
         });
         var feedcontent2;

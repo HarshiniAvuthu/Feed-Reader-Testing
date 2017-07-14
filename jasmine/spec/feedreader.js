@@ -85,10 +85,9 @@ $(function() {
         /*ensures when a new feed is loaded
         by the loadFeed function that the content actually changes  */
         var feedcontent1;
-        beforeEach(function(){
+        beforeEach(function(done){
             loadFeed(3, function() {
-                 feedcontent1 = $('.feed').html();
-                 done();
+                feedcontent1 = $('.feed').html();    
             }); 
         });
         var feedcontent2;
